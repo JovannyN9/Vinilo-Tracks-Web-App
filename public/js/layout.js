@@ -156,7 +156,7 @@
       ".card", ".post", ".wl-card", ".rel",
       ".review-cover", ".review-score", ".review-lede", ".review-actions", ".pull", ".ficha",
       ".gallery", ".tags", ".stats", ".vinyl-actions", ".tracklist li",
-      ".loop h2", ".loop-foot", ".searchbox", ".prose > *", ".article-lede",
+      ".loop h2", ".loop-foot", ".prose > *", ".article-lede",
       ".fcols > div", ".more", "#caps .cap",
       ".where-card", ".id-box", ".tile", ".ed", ".rec", ".check li", ".rep-cover", ".rep-info", ".id-cta-in"
     ].join(",");
@@ -168,7 +168,9 @@
         e.target.classList.add("in");
         io.unobserve(e.target);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
+    // threshold 0: basta con que asome 1px. Con un porcentaje, los bloques muy altos
+    // (como la lista de resultados en el celular) nunca llegaban a "verse" y se quedaban invisibles.
 
     function preparar(raiz) {
       const nuevos = [];

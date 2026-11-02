@@ -34,13 +34,6 @@
   if ("ResizeObserver" in window) new ResizeObserver(ajustarTodos).observe(caps);
   window.addEventListener("resize", ajustarTodos);
 
-  /* quita subtítulos automáticos */
-  function sinSubtitulos(p) {
-    try { p.unloadModule("captions"); } catch {}
-    try { p.unloadModule("cc"); } catch {}
-    try { p.setOption("captions", "track", {}); } catch {}
-  }
-
   /* saca el ID de cualquier link de YouTube */
   function idYouTube(valor) {
     if (!valor) return "";
@@ -80,12 +73,11 @@
           autoplay: 1, mute: 1, controls: 0, playsinline: 1, rel: 0,
           modestbranding: 1, disablekb: 1, iv_load_policy: 3, fs: 0,
           start: inicio, end: fin, origin: location.origin,
-          cc_load_policy: 0, showinfo: 0, enablejsapi: 1
+          cc_load_policy: 0, enablejsapi: 1
         },
         events: {
           onReady: e => {
             ajustarIframe(cap);
-            sinSubtitulos(e.target);
             e.target.mute();
             e.target.seekTo(inicio, true);
             e.target.playVideo();
@@ -97,7 +89,6 @@
           },
           onStateChange: e => {
             if (e.data === YT.PlayerState.PLAYING) {
-              sinSubtitulos(e.target);
               // espera un instante a que YouTube quite su ícono de "play/pausa" antes de mostrar el video
               setTimeout(() => cap.classList.add("playing"), 700);
             }
@@ -106,26 +97,57 @@
           onError: e => console.warn(`Cápsula ${i + 1}: YouTube no deja reproducir el video ${id} (error ${e.data}). Revisa que el video permita insertarse en otros sitios.`)
         }
       });
-      players.push({ cap, play: () => p.playVideo?.(), pause: () => p.pauseVideo?.() });
+      players.push({ cap, tipo: "youtube", play: () => p.playVideo?.(), pause: () => p.pauseVideo?.() });
+      // si en 12 segundos no arrancó, lo decimos en la consola (F12) y se queda la foto
+      setTimeout(() => {
+        if (!cap.classList.contains("playing"))
+          console.warn(`Cápsula ${i + 1}: el video de YouTube no arrancó. Puede estar bloqueado para insertarse en otros sitios. Usa un .mp4 con data-video.`);
+      }, 12000);
     });
   }
 
+  /* Video propio (.mp4). Es lo más confiable: sin botones, sin subtítulos, sin anuncios.
+     - Si el clip dura menos que data-end (ej. un clip de 10 s ya recortado), se repite completo.
+     - Si es un video largo, se repite del segundo data-start al data-end. */
   function crearMP4(cap, src, inicio, fin) {
     const v = document.createElement("video");
-    v.setAttribute("muted", "");
-    v.setAttribute("playsinline", "");
-    v.setAttribute("preload", "auto");
     v.muted = true;
-    v.src = src;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.autoplay = true;
+    v.preload = "metadata";
+    ["muted", "playsinline", "autoplay"].forEach(a => v.setAttribute(a, ""));
+    const foto = cap.querySelector("img");
+    if (foto) v.poster = foto.currentSrc || foto.src;
+    let corto = false;
+
     v.addEventListener("loadedmetadata", () => {
-      v.currentTime = Math.min(inicio, Math.max(0, v.duration - 1));
-      v.play().catch(() => {});
+      if (!isFinite(v.duration) || v.duration <= fin + 0.5) {
+        corto = true;
+        v.loop = true;
+      } else {
+        v.currentTime = inicio;
+      }
+      intentar();
     });
-    v.addEventListener("timeupdate", () => { if (v.currentTime >= fin) v.currentTime = inicio; });
+    v.addEventListener("timeupdate", () => {
+      if (!corto && v.currentTime >= fin) v.currentTime = inicio;
+    });
     v.addEventListener("playing", () => cap.classList.add("playing"));
-    v.addEventListener("error", () => console.warn(`No se encontró el video ${src}. Revisa la ruta (ej. /video/clip1.mp4 dentro de la carpeta public).`));
+    v.addEventListener("error", () => console.warn(`No se encontró el video ${src}. Revisa que esté en public/video/ y que la ruta empiece con /video/`));
+
+    // algunos celulares bloquean el autoplay hasta que la persona toca la pantalla
+    function intentar() {
+      v.play().catch(() => {
+        const una = () => { v.play().catch(() => {}); };
+        document.addEventListener("touchstart", una, { once: true, passive: true });
+        document.addEventListener("click", una, { once: true });
+      });
+    }
+
+    v.src = src;
     cap.appendChild(v);
-    players.push({ cap, play: () => v.play().catch(() => {}), pause: () => v.pause() });
+    players.push({ cap, tipo: "mp4", play: () => v.play().catch(() => {}), pause: () => v.pause() });
   }
 
   function arrancarVideos() {
@@ -152,6 +174,9 @@
         if (e.isIntersecting) {
           caps.classList.add("open");
           if (!iniciado) { iniciado = true; arrancarVideos(); }
+          else players.filter(p => p.tipo === "mp4").forEach(p => p.play());
+        } else if (iniciado) {
+          players.filter(p => p.tipo === "mp4").forEach(p => p.pause());
         }
         // ya no pausamos al salir: al pausar, YouTube dibuja su ícono de pausa encima del video
       });
