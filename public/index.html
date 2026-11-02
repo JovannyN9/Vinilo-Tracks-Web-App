@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vinilo Tracks — Vinilo y música en español</title>
+<meta name="description" content="Vinilo Tracks: revista digital de vinilo y música en español. Reseñas, noticias y un buscador curado de rock, pop y alternativo.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23060706' stroke='%23b6ff3b' stroke-width='8'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23b6ff3b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="home">
+<div id="site-header"></div>
+<main id="top">
+  <!-- HERO: casi todo el ancho de la pantalla -->
+  <div class="hero hero-bleed">
+    <div class="panel">
+      <h1>Vinilo Tracks</h1>
+      <div class="hero-grid">
+        <div class="hero-col">
+          <span class="top" id="hoy">Los Angeles</span>
+          <b>Vinilo Tracks</b> es una revista digital de <b>música</b> y cultura del <b>vinilo</b> en español: noticias, reseñas, lanzamientos y recomendaciones curadas. Del rock alternativo al pop, reunimos historias, discos y escenas que vale la pena escuchar con calma.
+          <br><a class="round" href="#resenas" aria-label="Ir a las reseñas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 4v16m0 0-6-6m6 6 6-6"/></svg></a>
+        </div>
+        <img class="singer" src="/img/singer.webp" alt="Cantante con smoking y micrófono, en blanco y negro">
+        <div class="hero-col right">
+          <span class="top">Los Angeles</span>
+          <b>Playlist oficial: Vinilo Tracks</b><br>
+          Una curaduría en constante actualización de <b>rock en español</b>: clásicos, joyas escondidas y nuevas canciones para acompañar el día. Dale follow y escucha la selección completa.
+          <br><a class="round" href="https://open.spotify.com/search/vinilo%20tracks" target="_blank" rel="noopener" aria-label="Escuchar la playlist en Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9.5c4-1.3 8.5-1 12 1M7 13c3.2-.9 6.6-.6 9.5.9M8 16.3c2.4-.6 4.9-.4 7 .7"/></svg></a>
+        </div>
+      </div>
+      <svg class="stamp" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="c" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0"/></defs>
+        <text font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="2.2" fill="#0a0b08"><textPath href="#c">ROCK · ALTERNATIVO · EN ESPAÑOL · </textPath></text>
+        <circle cx="50" cy="50" r="9" fill="#0a0b08"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- CINTA (izquierda → derecha) -->
+  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+  <!-- RESEÑAS -->
+  <section id="resenas">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Reseñas</div><h2>De nuestra colección</h2></div>
+        <p>Discos que sacamos del estante y escuchamos completos, lado A y lado B. Cada reseña lleva año, país y escena.</p>
+      </div>
+      <div class="grid" id="coll"></div>
+      <div class="more"><a class="pill" href="/resenas">Leer más reseñas</a></div>
+    </div>
+  </section>
+
+  <!-- NOTICIAS / BLOG -->
+  <section id="noticias" class="section-alt">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Blog &amp; Noticias</div><h2>Del surco</h2></div>
+        <p>Guías para coleccionar, listas y notas sobre la escena en español.</p>
+      </div>
+      <div class="news-grid news-home" id="news"></div>
+      <div class="more"><a class="pill" href="/noticias">Ver todas las notas</a></div>
+    </div>
+  </section>
+
+  <!-- CÁPSULAS CON VIDEO -->
+  <section class="loop" id="loop">
+    <div class="wrap">
+      <h2>Reseñas, lanzamientos y joyas para coleccionistas.</h2>
+      <!--
+        CÓMO PONER LOS VIDEOS:
+        • data-youtube = el link de YouTube completo o solo el ID (ej. "dQw4w9WgXcQ")
+        • data-video   = o un video propio: "/video/clip1.mp4" (guárdalo en public/video/)
+        • data-start / data-end = segundo donde empieza y termina el loop (30 → 40)
+        La foto se queda como portada hasta que el video arranca.
+      -->
+      <div class="caps" id="caps">
+        <div class="cap" data-youtube="" data-start="30" data-end="40"><img src="/img/capsula-0.webp" alt=""></div>
+        <div class="cap" data-youtube="" data-start="30" data-end="40"><img src="/img/capsula-1.webp" alt=""></div>
+        <div class="cap" data-youtube="" data-start="30" data-end="40"><img src="/img/capsula-2.webp" alt=""></div>
+        <div class="cap" data-youtube="" data-start="30" data-end="40"><img src="/img/capsula-3.webp" alt=""></div>
+        <div class="cap" data-youtube="" data-start="30" data-end="40"><img src="/img/capsula-4.webp" alt=""></div>
+      </div>
+      <div class="loop-foot"><p>Momentos en<br>loop</p></div>
+    </div>
+  </section>
+
+  <!-- BUSCADOR -->
+  <section id="buscador">
+    <div class="wrap">
+      <div class="head">
+        <div><div class="eyebrow">Archivo curado</div><h2>Busca un vinilo</h2></div>
+        <p>Rock, pop rock y alternativo en español, de cualquier época y país. Abre cualquier disco para ver su ficha completa o guárdalo en tu wishlist.</p>
+      </div>
+      <div class="searchbox">
+        <label class="field" for="q">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="q" type="search" placeholder="Soda Stereo, Zoé, Héroes del Silencio…" autocomplete="off" aria-label="Buscar artista o disco">
+        </label>
+        <div class="filters">
+          <div class="chips" role="group" aria-label="Género" id="chips">
+            <button class="chip" aria-pressed="true" data-g="">Todo</button>
+            <button class="chip" aria-pressed="false" data-g="Rock">Rock</button>
+            <button class="chip" aria-pressed="false" data-g="Alternativo">Alternativo</button>
+            <button class="chip" aria-pressed="false" data-g="Pop Rock">Pop Rock</button>
+          </div>
+          <select id="country" aria-label="País"><option value="">Todos los países</option></select>
+          <select id="sort" aria-label="Orden"><option value="new">Más recientes</option><option value="old">Más antiguos</option><option value="az">A – Z</option></select>
+        </div>
+        <div class="status mono"><span id="count"></span><span>Resultados vía Discogs · curado en español</span></div>
+        <div class="results" id="results"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+<script src="/js/core.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/cuenta-ui.js"></script>
+<script src="/js/home.js"></script>
+<script src="/js/capsulas.js"></script>
+<script src="/js/search.js"></script>
+</body>
+</html>

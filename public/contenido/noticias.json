@@ -1,0 +1,84 @@
+[
+  {
+    "slug": "10-discos-rock-pop-espanol-2010-2024",
+    "titulo": "10 discos de rock y pop en español (2010–2024) para empezar el estante",
+    "categoria": "Listas",
+    "fecha": "2026-10-30",
+    "autor": "Redacción Vinilo Tracks",
+    "imagen": "/img/foto-odisseo.webp",
+    "extracto": "Una lista corta para quien quiere arrancar su colección con la escena de la última década.",
+    "cuerpo": [
+      { "p": "Si estás empezando a coleccionar música en español de la última década, esta lista es un buen punto de partida. No es un ranking: son discos que funcionan completos, de principio a fin, en tornamesa." },
+      { "lista": [
+        "Zoé — Prográmaton (2011)",
+        "Vetusta Morla — Mapas (2011)",
+        "Carla Morrison — Déjenme Llorar (2012)",
+        "Babasónicos — Romantisísmico (2013)",
+        "Los Bunkers — La Velocidad de la Luz (2013)",
+        "Enjambre — Daltónico (2014)",
+        "Mon Laferte — Mon Laferte Vol. 1 (2015)",
+        "Little Jesus — Río Salvaje (2016)",
+        "El Mató a un Policía Motorizado — La Síntesis O'Konor (2017)",
+        "Zoé — Aztlán (2018)"
+      ] },
+      { "h2": "Cómo buscarlos" },
+      { "p": "Todos están en nuestro buscador curado. Escribe el nombre del artista, abre el disco y guárdalo en tu wishlist para no perderlo de vista." }
+    ]
+  },
+  {
+    "slug": "como-empezar-coleccion-vinilos-espanol",
+    "titulo": "Cómo empezar tu colección de vinilos en español",
+    "categoria": "Guías",
+    "fecha": "2026-10-24",
+    "autor": "Redacción Vinilo Tracks",
+    "imagen": "/img/foto-terracota.webp",
+    "extracto": "Qué comprar primero, cuánto gastar y cómo no llenarte de discos que no vas a escuchar.",
+    "cuerpo": [
+      { "p": "Empezar una colección emociona, pero también es fácil gastar de más. Estas son algunas reglas simples que nos han funcionado." },
+      { "h2": "1. Compra lo que escuchas" },
+      { "p": "Antes de buscar ediciones raras, compra los discos que ya pones todos los días. Una colección que se escucha vale más que una que solo se ve bonita." },
+      { "h2": "2. Usa una wishlist" },
+      { "p": "Guarda los discos que quieres y revisa la lista antes de comprar por impulso. Te ayuda a priorizar y a esperar buenos precios." },
+      { "h2": "3. Revisa la edición" },
+      { "p": "Un mismo disco puede tener muchas ediciones: reediciones, prensajes de otros países, colores especiales. Fíjate en el sello y el número de catálogo antes de pagar." },
+      { "h2": "4. Cuida lo que tienes" },
+      { "p": "Fundas internas nuevas y guardarlos de pie hacen una diferencia enorme con los años." }
+    ]
+  },
+  {
+    "slug": "como-limpiar-y-guardar-tus-vinilos",
+    "titulo": "Cómo limpiar y guardar tus vinilos sin arruinarlos",
+    "categoria": "Guías",
+    "fecha": "2026-10-17",
+    "autor": "Redacción Vinilo Tracks",
+    "imagen": "/img/foto-banda-luz.webp",
+    "extracto": "Lo básico para que tus discos suenen bien por muchos años.",
+    "cuerpo": [
+      { "p": "Un vinilo bien cuidado puede sonar bien durante décadas. La mayoría de los daños vienen de hábitos pequeños que se corrigen fácil." },
+      { "h2": "Agárralo por las orillas" },
+      { "p": "Los dedos dejan grasa en los surcos. Sostén el disco por el borde y por la etiqueta del centro." },
+      { "h2": "Limpieza en seco antes de cada escucha" },
+      { "p": "Un cepillo de fibra de carbono quita el polvo de la superficie. Pásalo en círculos mientras el disco gira." },
+      { "h2": "Guárdalos de pie" },
+      { "p": "Apilarlos acostados los deforma con el tiempo. Guárdalos verticales, lejos del sol y de fuentes de calor." }
+    ]
+  },
+  {
+    "slug": "como-leer-una-ficha-de-discogs",
+    "titulo": "Prensajes, matrices y sellos: cómo leer una ficha de Discogs",
+    "categoria": "Guías",
+    "fecha": "2026-10-10",
+    "autor": "Redacción Vinilo Tracks",
+    "imagen": "/img/foto-duo.webp",
+    "extracto": "Qué significa cada dato de la ficha de un disco y por qué importa al comprar.",
+    "cuerpo": [
+      { "p": "Cuando abres un vinilo en nuestro buscador, la información viene de Discogs, la base de datos de música más grande del mundo. Así se lee." },
+      { "h2": "Sello y número de catálogo" },
+      { "p": "El sello es la disquera que publicó esa edición. El número de catálogo la identifica. Dos discos con la misma portada pueden tener números distintos si son ediciones diferentes." },
+      { "h2": "Formato" },
+      { "p": "Te dice si es LP, de 12 pulgadas, a 33 RPM, si es reedición, edición limitada o de color." },
+      { "h2": "Tienen y lo quieren" },
+      { "p": "Cuánta gente de la comunidad lo tiene en su colección y cuánta lo tiene en su wishlist. Si muchos lo quieren y pocos lo tienen, suele ser más difícil de conseguir." }
+    ]
+  }
+]
