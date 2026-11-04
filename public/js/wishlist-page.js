@@ -74,7 +74,7 @@
   /* invitación a crear cuenta (solo si el login está activo y no hay sesión) */
   const cabeza = document.querySelector(".page-head p");
   cabeza?.insertAdjacentHTML("afterend", `<div class="wl-login" id="wl-login" hidden>
-      <span>Tu lista solo vive en este navegador. <strong>Crea una cuenta gratis</strong> para verla en tu celular y en tu compu.</span>
+      <span>Ahora tu lista solo vive en este navegador: si borras el caché o cambias de celular, se pierde. <strong>Crea una cuenta gratis</strong> y te sigue a todos tus dispositivos. Solo la usamos para tu wishlist.</span>
       <button class="btn-primary" type="button" data-auth="registro">Crear cuenta</button>
     </div>`);
   VT.cuenta.cambio(u => {

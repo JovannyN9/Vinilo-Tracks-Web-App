@@ -1,0 +1,130 @@
+<!--
+  Vinilo Tracks — correo para confirmar la cuenta
+  Dónde se pega: Supabase → Authentication → Emails → "Confirm signup"
+  Asunto sugerido:  Confirma tu cuenta de Vinilo Tracks
+  Variables de Supabase que usa:
+    {{ .ConfirmationURL }}  el enlace para confirmar
+    {{ .SiteURL }}          tu página (la que pusiste en Site URL)
+    {{ .Email }}            el correo de la persona
+  El logo se carga desde tu página: {{ .SiteURL }}/img/logo-email.jpg
+  (por eso Site URL tiene que ser tu link real, no localhost)
+-->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Confirma tu cuenta de Vinilo Tracks</title>
+</head>
+<body style="margin:0; padding:0; background-color:#060706;">
+  <!-- texto de vista previa (lo que se ve en la bandeja antes de abrir) -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0;">Un clic y tu wishlist te sigue a todos tus dispositivos.</div>
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#060706;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:520px; background-color:#000000; border:1px solid #22261c; border-radius:24px;">
+
+          <!-- logo -->
+          <tr>
+            <td align="center" style="padding:28px 24px 8px;">
+              <a href="{{ .SiteURL }}" style="text-decoration:none;">
+                <img src="{{ .SiteURL }}/img/logo-email.jpg" width="200" alt="Vinilo Tracks" style="display:block; width:200px; max-width:100%; height:auto; border:0;">
+              </a>
+            </td>
+          </tr>
+
+          <!-- título -->
+          <tr>
+            <td align="center" style="padding:8px 32px 0;">
+              <h1 style="margin:0; font-family:Impact, 'Arial Narrow Bold', 'Helvetica Neue', Arial, sans-serif; font-size:34px; line-height:1.05; font-weight:400; letter-spacing:0.5px; text-transform:uppercase; color:#eef0e6;">
+                Confirma tu cuenta
+              </h1>
+            </td>
+          </tr>
+
+          <!-- texto -->
+          <tr>
+            <td align="center" style="padding:16px 36px 0;">
+              <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:16px; line-height:1.55; color:#c9ccbf;">
+                Ya casi. Toca el botón para confirmar tu correo y activar tu cuenta de Vinilo Tracks.
+              </p>
+            </td>
+          </tr>
+
+          <!-- botón -->
+          <tr>
+            <td align="center" style="padding:28px 24px 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#d9f86a" style="border-radius:99px;">
+                    <a href="{{ .ConfirmationURL }}" target="_blank" style="display:inline-block; padding:15px 34px; font-family:'Courier New', Courier, monospace; font-size:15px; font-weight:700; color:#060706; text-decoration:none; border-radius:99px;">
+                      Confirmar mi cuenta &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- para qué es la cuenta -->
+          <tr>
+            <td style="padding:24px 28px 0;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0f110d; border:1px dashed #22261c; border-radius:14px;">
+                <tr>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 6px; font-family:'Courier New', Courier, monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#d9f86a;">
+                      ¿Para qué es tu cuenta?
+                    </p>
+                    <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; line-height:1.5; color:#c9ccbf;">
+                      Solo para guardar tu wishlist en la nube: te sigue al celular y a la compu, y no se pierde si borras el caché. No te mandamos spam.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- enlace de respaldo -->
+          <tr>
+            <td style="padding:22px 28px 0;">
+              <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; line-height:1.5; color:#8d937f;">
+                ¿El botón no funciona? Copia este enlace en tu navegador:<br>
+                <a href="{{ .ConfirmationURL }}" style="color:#d9f86a; word-break:break-all;">{{ .ConfirmationURL }}</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- English -->
+          <tr>
+            <td style="padding:20px 28px 0;">
+              <p style="margin:0; padding-top:16px; border-top:1px solid #22261c; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; line-height:1.5; color:#8d937f;">
+                <strong style="color:#c9ccbf;">English:</strong> tap the button above to confirm your email and activate your Vinilo Tracks account. Your account only keeps your wishlist synced across your devices.
+              </p>
+            </td>
+          </tr>
+
+          <!-- pie -->
+          <tr>
+            <td style="padding:20px 28px 28px;">
+              <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; line-height:1.5; color:#5d6352;">
+                Recibiste este correo porque alguien creó una cuenta con {{ .Email }} en Vinilo Tracks. Si no fuiste tú, ignóralo: sin confirmar, la cuenta no se activa.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- firma -->
+        <p style="margin:20px 0 0; font-family:'Courier New', Courier, monospace; font-size:11px; letter-spacing:1px; color:#5d6352;">
+          VINILO TRACKS · LOS ANGELES
+        </p>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

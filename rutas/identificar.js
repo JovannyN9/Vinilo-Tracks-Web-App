@@ -1,13 +1,16 @@
 /* =========================================================
    Vinilo Tracks — IDENTIFICADOR DE EDICIONES
-   Para el coleccionista que tiene un vinilo en la mano:
+   Para quien tiene un disco en la mano: vinilo, CD, casete o cualquier
+   formato que exista en Discogs.
+
      GET /api/identificar/buscar?codigo=...&tipo=auto|barcode|catno|matriz
-         → lista de ediciones que coinciden con el código
+         → ediciones que coinciden con el código
      GET /api/identificar/reporte/:id
          → rareza, precios por condición, primera edición o reedición,
-           cómo verificar la copia física y otras ediciones del mismo disco
-   El identificador funciona con cualquier vinilo (no solo rock en español),
-   porque en una tienda o un tianguis vas a encontrar de todo.
+           códigos para verificar la copia y otras ediciones del mismo disco
+
+   El servidor manda DATOS y CLAVES, no frases: la página arma los textos
+   en español o en inglés (public/js/identificar.js).
    ========================================================= */
 const express = require("express");
 
@@ -15,13 +18,18 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
   const router = express.Router();
 
   router.use((req, res, next) => {
-    if (!tokenListo()) return res.status(500).json({ error: "Falta configurar el token de Discogs en el servidor." });
+    if (!tokenListo()) return res.status(500).json({ error: "token", mensaje: "Falta configurar el token de Discogs en el servidor." });
     next();
   });
+
+  /* formato principal de un resultado: Vinyl, CD, Cassette, File… */
+  const FORMATOS_BASE = ["Vinyl", "CD", "Cassette", "Box Set", "File", "DVD", "Blu-ray", "Shellac", "Lathe Cut", "Flexi-disc", "8-Track Cartridge", "Reel-To-Reel", "Minidisc", "SACD", "CDr"];
+  const formatoBase = lista => (lista || []).find(f => FORMATOS_BASE.includes(f)) || (lista || [])[0] || "";
 
   /* ---------- 1) BUSCAR POR CÓDIGO ---------- */
   const resumen = r => {
     const [artista, ...resto] = (r.title || "").split(" - ");
+    const formatos = r.format || [];
     return {
       id: r.id,
       master: r.master_id || null,
@@ -31,7 +39,8 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
       pais: r.country || null,
       sello: sinNumero((r.label || [])[0] || ""),
       catno: r.catno || "",
-      formato: (r.format || []).filter(f => f !== "Vinyl"),
+      tipoFormato: formatoBase(formatos),
+      formato: formatos.filter(f => f !== formatoBase(formatos)),
       portada: r.cover_image && !r.cover_image.includes("spacer.gif") ? r.cover_image : (r.thumb || null),
       tienen: r.community?.have ?? null,
       quieren: r.community?.want ?? null
@@ -46,103 +55,85 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
   router.get("/buscar", async (req, res) => {
     const codigo = String(req.query.codigo || "").trim().slice(0, 60);
     let tipo = String(req.query.tipo || "auto");
-    if (codigo.length < 2) return res.status(400).json({ error: "Escribe un código de al menos 2 caracteres." });
+    if (codigo.length < 2) return res.status(400).json({ error: "corto", mensaje: "Escribe un código de al menos 2 caracteres." });
 
     const soloDigitos = codigo.replace(/[\s.-]/g, "");
     if (tipo === "auto") tipo = /^\d{8,14}$/.test(soloDigitos) ? "barcode" : "mixto";
 
-    const clave = `ident:${tipo}:${codigo.toLowerCase()}`;
+    const clave = `ident2:${tipo}:${codigo.toLowerCase()}`;
     const hit = desdeCache(clave);
     if (hit) return res.json(hit);
 
     try {
       let crudos = [];
-      let soloVinilo = true;
-
       if (tipo === "barcode") {
-        crudos = await buscarPor({ barcode: soloDigitos, format: "Vinyl" });
-        if (!crudos.length) { crudos = await buscarPor({ barcode: soloDigitos }); soloVinilo = false; }
+        crudos = await buscarPor({ barcode: soloDigitos });
       } else if (tipo === "catno") {
-        crudos = await buscarPor({ catno: codigo, format: "Vinyl" });
+        crudos = await buscarPor({ catno: codigo });
       } else {
-        // matriz o "no sé qué es": probamos como número de catálogo y como texto libre
+        // matriz o "no sé": probamos como número de catálogo y como texto libre
         const [porCat, porTexto] = await Promise.all([
-          tipo === "matriz" ? Promise.resolve([]) : buscarPor({ catno: codigo, format: "Vinyl" }),
-          buscarPor({ q: codigo, format: "Vinyl" })
+          tipo === "matriz" ? Promise.resolve([]) : buscarPor({ catno: codigo }),
+          buscarPor({ q: codigo })
         ]);
         const vistos = new Set();
         crudos = [...porCat, ...porTexto].filter(r => !vistos.has(r.id) && vistos.add(r.id));
       }
 
       const resultados = crudos.map(resumen).sort((a, b) => (a.anio || 9999) - (b.anio || 9999));
-      const out = { tipo, codigo, soloVinilo, total: resultados.length, resultados: resultados.slice(0, 40) };
+      const out = { tipo, codigo, total: resultados.length, resultados: resultados.slice(0, 40) };
       cache.set(clave, { t: Date.now(), v: out });
       res.json(out);
     } catch (err) {
       console.error(err.message);
-      res.status(502).json({ error: err.message || "No pudimos hablar con Discogs." });
+      res.status(502).json({ error: "discogs", mensaje: err.message || "No pudimos hablar con Discogs." });
     }
   });
 
   /* ---------- 2) REPORTE DE UNA EDICIÓN ---------- */
   const CONDICIONES = [
-    { llave: "Mint (M)", codigo: "M", nombre: "Mint", desc: "Nuevo o sellado. Nunca se ha tocado." },
-    { llave: "Near Mint (NM or M-)", codigo: "NM", nombre: "Near Mint", desc: "Casi perfecto. Sin marcas visibles." },
-    { llave: "Very Good Plus (VG+)", codigo: "VG+", nombre: "Very Good +", desc: "Marcas muy leves. Suena muy bien." },
-    { llave: "Very Good (VG)", codigo: "VG", nombre: "Very Good", desc: "Marcas visibles y algo de ruido." },
-    { llave: "Good Plus (G+)", codigo: "G+", nombre: "Good +", desc: "Muy usado. Ruido constante, pero se escucha." },
-    { llave: "Good (G)", codigo: "G", nombre: "Good", desc: "Muy desgastado. Solo para completar colección." }
+    ["Mint (M)", "M"], ["Near Mint (NM or M-)", "NM"], ["Very Good Plus (VG+)", "VG+"],
+    ["Very Good (VG)", "VG"], ["Good Plus (G+)", "G+"], ["Good (G)", "G"]
   ];
 
-  const DONDE = {
-    "Matrix / Runout": "Grabado a mano o a máquina en la parte lisa del vinilo, entre la última canción y la etiqueta. Compáralo letra por letra.",
-    "Barcode": "En la contraportada o en un sticker del plástico.",
-    "Label Code": "En la etiqueta del disco o en la contraportada.",
-    "Rights Society": "En la etiqueta del disco (por ejemplo SACM, BIEM, SADAIC).",
-    "Mould SID Code": "Grabado cerca del centro del vinilo.",
-    "Mastering SID Code": "Grabado en la parte lisa cerca de la etiqueta.",
-    "Pressing Plant ID": "Grabado en la parte lisa del vinilo.",
-    "Other": "Revisa la etiqueta, la contraportada y la parte lisa del vinilo."
-  };
-
+  /* Cada razón va como clave + números; la página la convierte en frase */
   function calcularRareza({ ficha, enVenta, esPrimera, anioOriginal, banderas }) {
     let puntos = 0;
     const razones = [];
     const tienen = ficha.comunidad.tienen ?? 0;
     const quieren = ficha.comunidad.quieren ?? 0;
-    const fmt = n => Number(n).toLocaleString("es-MX");
+    const suma = (n, peso, k, datos = {}) => { puntos += n; razones.push({ peso, k, ...datos }); };
 
-    if (tienen < 50) { puntos += 3; razones.push({ peso: "+", texto: `Solo ${fmt(tienen)} coleccionistas en Discogs dicen tenerlo.` }); }
-    else if (tienen < 250) { puntos += 2; razones.push({ peso: "+", texto: `Pocos coleccionistas lo tienen (${fmt(tienen)}).` }); }
-    else if (tienen < 1000) { puntos += 1; razones.push({ peso: "+", texto: `${fmt(tienen)} coleccionistas lo tienen.` }); }
-    else razones.push({ peso: "-", texto: `Más de ${fmt(Math.floor(tienen / 1000) * 1000)} coleccionistas lo tienen. Circulan muchas copias.` });
+    if (tienen < 50) suma(3, "+", "muyPocos", { n: tienen });
+    else if (tienen < 250) suma(2, "+", "pocos", { n: tienen });
+    else if (tienen < 1000) suma(1, "+", "algunos", { n: tienen });
+    else razones.push({ peso: "-", k: "muchos", n: Math.floor(tienen / 1000) * 1000 });
 
     const ratio = quieren / Math.max(tienen, 1);
-    if (ratio > 2) { puntos += 2; razones.push({ peso: "+", texto: `Lo buscan ${ratio.toFixed(1)} veces más personas de las que lo tienen.` }); }
-    else if (ratio > 1) { puntos += 1; razones.push({ peso: "+", texto: "Más gente lo busca de la que lo tiene." }); }
+    if (ratio > 2) suma(2, "+", "demandaAlta", { n: Number(ratio.toFixed(1)) });
+    else if (ratio > 1) suma(1, "+", "demanda");
 
-    if (enVenta === 0) { puntos += 2; razones.push({ peso: "+", texto: "Ahora mismo no hay ninguna copia a la venta en Discogs." }); }
-    else if (enVenta <= 3) { puntos += 1; razones.push({ peso: "+", texto: `Solo ${enVenta} ${enVenta === 1 ? "copia" : "copias"} a la venta en Discogs.` }); }
-    else if (enVenta >= 25) { puntos -= 1; razones.push({ peso: "-", texto: `Hay ${enVenta} copias a la venta: no es difícil de conseguir.` }); }
+    if (enVenta === 0) suma(2, "+", "sinVenta");
+    else if (enVenta <= 3) suma(1, "+", "pocaVenta", { n: enVenta });
+    else if (enVenta >= 25) suma(-1, "-", "muchaVenta", { n: enVenta });
 
-    if (banderas.includes("Test Pressing")) { puntos += 3; razones.push({ peso: "+", texto: "Es una prueba de prensado (test pressing). Se hacen muy pocas." }); }
-    if (banderas.some(b => b === "Promo" || b === "White Label")) { puntos += 2; razones.push({ peso: "+", texto: "Es una copia promocional, no se vendía en tiendas." }); }
-    if (banderas.includes("Numbered")) { puntos += 2; razones.push({ peso: "+", texto: "Es una edición numerada." }); }
-    if (banderas.includes("Limited Edition")) { puntos += 1; razones.push({ peso: "+", texto: "Es edición limitada." }); }
-    if (esPrimera && anioOriginal && anioOriginal < 2005) { puntos += 1; razones.push({ peso: "+", texto: `Es de la primera tanda, de ${anioOriginal}.` }); }
-    if (banderas.some(b => b === "Reissue" || b === "Repress")) razones.push({ peso: "-", texto: "Es una reedición, no la edición original." });
+    if (banderas.includes("Test Pressing")) suma(3, "+", "test");
+    if (banderas.some(b => b === "Promo" || b === "White Label")) suma(2, "+", "promo");
+    if (banderas.includes("Numbered")) suma(2, "+", "numerada");
+    if (banderas.includes("Limited Edition")) suma(1, "+", "limitada");
+    if (esPrimera && anioOriginal && anioOriginal < 2005) suma(1, "+", "primera", { n: anioOriginal });
+    if (banderas.some(b => b === "Reissue" || b === "Repress")) razones.push({ peso: "-", k: "reedicion" });
 
     puntos = Math.max(0, puntos);
-    const niveles = ["Común", "Poco común", "Raro", "Muy raro"];
     const nivel = puntos >= 6 ? 3 : puntos >= 4 ? 2 : puntos >= 2 ? 1 : 0;
-    return { nivel, etiqueta: niveles[nivel], puntos, razones };
+    return { nivel, puntos, razones };
   }
 
   router.get("/reporte/:id", async (req, res) => {
     const id = String(req.params.id).replace(/\D/g, "");
-    if (!id) return res.status(400).json({ error: "ID de disco inválido." });
+    if (!id) return res.status(400).json({ error: "id", mensaje: "ID de disco inválido." });
 
-    const clave = "reporte:" + id;
+    const clave = "reporte2:" + id;
     const hit = desdeCache(clave);
     if (hit) return res.json(hit);
 
@@ -155,28 +146,35 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
         ficha.master ? discogsGet(`/masters/${ficha.master}/versions?per_page=100&sort=released&sort_order=asc`, { opcional: true }) : null
       ]);
 
-      /* ediciones del mismo disco */
-      const todas = (versiones?.versions || []);
-      const deVinilo = todas.filter(v => (v.major_formats || []).includes("Vinyl") || /vinyl|LP|12"|7"/i.test(v.format || ""));
+      /* todas las ediciones del mismo disco, en cualquier formato */
+      const todas = versiones?.versions || [];
+      const tipoDe = v => formatoBase(v.major_formats || []) || (v.format || "").split(",")[0].trim();
       const anioDe = v => Number(String(v.released || "").slice(0, 4)) || null;
-      const anios = deVinilo.map(anioDe).filter(Boolean);
+      const anios = todas.map(anioDe).filter(Boolean);
       const anioOriginal = master?.year || (anios.length ? Math.min(...anios) : null);
 
-      /* qué tipo de edición es */
+      const porFormato = {};
+      todas.forEach(v => { const t = tipoDe(v) || "Other"; porFormato[t] = (porFormato[t] || 0) + 1; });
+
+      /* tipo de edición */
       const detalles = ficha.formatos.flatMap(f => f.detalles);
       const textos = ficha.formatos.map(f => f.texto).filter(Boolean);
       const BANDERAS = ["Test Pressing", "Promo", "White Label", "Numbered", "Limited Edition", "Reissue", "Repress", "Remastered", "Unofficial Release", "Club Edition", "Special Edition", "Deluxe Edition", "Stereo", "Mono", "Gatefold", "180 Gram", "Picture Disc"];
       const banderas = BANDERAS.filter(b => detalles.includes(b) || textos.some(t => t.includes(b)));
       const esReedicion = banderas.some(b => b === "Reissue" || b === "Repress");
       const esPrimera = !esReedicion && !!ficha.anio && !!anioOriginal && ficha.anio <= anioOriginal;
-      const mismoAnio = anioOriginal ? deVinilo.filter(v => anioDe(v) === anioOriginal).length : 0;
+      const tipoFormato = formatoBase(ficha.formatos.map(f => f.nombre));
+      const mismoAnio = anioOriginal ? todas.filter(v => anioDe(v) === anioOriginal && tipoDe(v) === tipoFormato).length : 0;
 
       const enVenta = stats?.num_for_sale ?? ficha.venta.enVenta ?? 0;
       const rareza = calcularRareza({ ficha, enVenta, esPrimera, anioOriginal, banderas });
 
-      /* precios */
       const precios = sugerencias && Object.keys(sugerencias).length
-        ? CONDICIONES.filter(c => sugerencias[c.llave]).map(c => ({ ...c, llave: undefined, valor: Math.round(sugerencias[c.llave].value * 100) / 100, moneda: sugerencias[c.llave].currency }))
+        ? CONDICIONES.filter(([llave]) => sugerencias[llave]).map(([llave, codigo]) => ({
+            codigo,
+            valor: Math.round(sugerencias[llave].value * 100) / 100,
+            moneda: sugerencias[llave].currency
+          }))
         : [];
 
       const reporte = {
@@ -185,20 +183,13 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
         titulo: ficha.titulo,
         portada: ficha.imagenes[0]?.url || null,
         anio: ficha.anio,
-        lanzamiento: ficha.lanzamiento,
         pais: ficha.pais,
         sellos: ficha.sellos,
+        tipoFormato,
         formato: ficha.formatos.map(f => [f.cantidad > 1 ? `${f.cantidad} × ${f.nombre}` : f.nombre, ...f.detalles, f.texto].filter(Boolean).join(", ")).join(" + "),
         banderas,
         noOficial: banderas.includes("Unofficial Release"),
-        edicion: {
-          anioOriginal,
-          esPrimera,
-          esReedicion,
-          totalVersiones: todas.length,
-          totalVinilo: deVinilo.length,
-          mismoAnio
-        },
+        edicion: { anioOriginal, esPrimera, esReedicion, total: todas.length, porFormato, mismoAnio },
         rareza,
         comunidad: ficha.comunidad,
         mercado: {
@@ -209,16 +200,18 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
           historialUrl: `https://www.discogs.com/sell/history/${ficha.id}`,
           ventaUrl: ficha.urlVenta
         },
-        verificar: [
-          ...ficha.sellos.filter(s => s.catalogo && s.catalogo !== "none").map(s => ({ tipo: "Número de catálogo", valor: s.catalogo, nota: s.nombre, donde: "En el lomo, la contraportada y la etiqueta del disco." })),
-          ...ficha.identificadores.map(i => ({ tipo: i.tipo, valor: i.valor, nota: i.nota, donde: DONDE[i.tipo] || DONDE.Other }))
+        // códigos para comparar con la copia física (la página decide cuáles son "clave")
+        codigos: [
+          ...ficha.sellos.filter(s => s.catalogo && s.catalogo !== "none").map(s => ({ tipo: "catno", valor: s.catalogo, nota: s.nombre })),
+          ...ficha.identificadores.map(i => ({ tipo: i.tipo, valor: i.valor, nota: i.nota }))
         ],
-        otras: deVinilo.slice(0, 40).map(v => ({
+        otras: todas.slice(0, 40).map(v => ({
           id: v.id,
           anio: anioDe(v),
           pais: v.country || "",
           sello: sinNumero(v.label || ""),
           catno: v.catno || "",
+          tipo: tipoDe(v),
           formato: v.format || "",
           tienen: v.stats?.community?.in_collection ?? null,
           actual: String(v.id) === String(ficha.id)
@@ -230,7 +223,7 @@ module.exports = function ({ discogs, discogsGet, obtenerFicha, desdeCache, cach
       res.json(reporte);
     } catch (err) {
       console.error(err.message);
-      res.status(err.status === 404 ? 404 : 502).json({ error: err.message || "No pudimos hablar con Discogs." });
+      res.status(err.status === 404 ? 404 : 502).json({ error: err.status === 404 ? "noExiste" : "discogs", mensaje: err.message || "No pudimos hablar con Discogs." });
     }
   });
 

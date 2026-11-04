@@ -20,12 +20,12 @@
     header.outerHTML = `
     <header class="site-header">
       <div class="wrap bar">
-        <a class="logo" href="/" aria-label="Vinilo Tracks, inicio">${logo}<span>VINILO TRACKS</span></a>
+        <a class="logo" href="/" aria-label="Vinilo Tracks, inicio">${logo}<span translate="no">VINILO TRACKS</span></a>
         <nav id="menu" aria-label="Principal"><ul>
           <li><a href="/"${activo("/")}>Home</a></li>
           <li><a href="/resenas"${activo("/resenas")}>Reseñas</a></li>
           <li><a href="/noticias"${activo("/noticias")}>Blog &amp; Noticias</a></li>
-          <li><a href="/identificar"${activo("/identificar")} class="nav-tool">Identificar vinilo<span class="nav-new">Nuevo</span></a></li>
+          <li><a href="/identificar"${activo("/identificar")} class="nav-tool">Identificador<span class="nav-new">Nuevo</span></a></li>
           <li><a href="/about"${activo("/about")}>About Tracks</a></li>
         </ul></nav>
         <div class="bar-actions">
@@ -62,7 +62,7 @@
         <button class="x" id="wl-close" type="button" aria-label="Cerrar wishlist">✕</button>
       </div>
       <div class="drawer-list" id="wl-list"></div>
-      <div class="drawer-foot"><p class="drawer-note" id="wl-note" hidden>Crea una cuenta gratis para tener tu wishlist en el celular y en la compu. <button type="button" class="link-btn" data-auth="registro">Crear cuenta</button></p><a class="pill pill-solid" href="/wishlist">Ver wishlist completa</a></div>
+      <div class="drawer-foot"><p class="drawer-note" id="wl-note" hidden>Esta lista solo vive en este navegador: si borras el caché, se pierde. Con una cuenta gratis te sigue al celular y a la compu. <button type="button" class="link-btn" data-auth="registro">Crear cuenta</button></p><a class="pill pill-solid" href="/wishlist">Ver wishlist completa</a></div>
     </aside>`);
 
   const drawer = document.getElementById("wl-drawer");
@@ -113,10 +113,10 @@
     footer.outerHTML = `
     <footer class="site-footer" id="footer">
       <div class="wrap">
-        <p class="big" aria-hidden="true">Vinilo Tracks</p>
+        <p class="big" aria-hidden="true" translate="no">Vinilo Tracks</p>
         <div class="fcols">
           <div><h4>About Tracks</h4><p class="fabout">Revista digital de vinilo y música en español, curada desde Los Angeles para coleccionistas y escuchas pacientes.</p></div>
-          <div><h4>Secciones</h4><ul><li><a href="/resenas">Reseñas</a></li><li><a href="/noticias">Blog &amp; Noticias</a></li><li><a href="/#buscador">Buscador</a></li><li><a href="/identificar">Identificar vinilo</a></li><li><a href="/wishlist">Wishlist</a></li></ul></div>
+          <div><h4>Secciones</h4><ul><li><a href="/resenas">Reseñas</a></li><li><a href="/noticias">Blog &amp; Noticias</a></li><li><a href="/#buscador">Buscador</a></li><li><a href="/identificar">Identificador de discos</a></li><li><a href="/wishlist">Wishlist</a></li></ul></div>
           <div><h4>Escenas</h4><ul><li><a href="/resenas#Rock">Rock en español</a></li><li><a href="/resenas#Pop">Pop</a></li><li><a href="/resenas#Alternativo">Alternativo</a></li></ul></div>
           <div><h4>Sitio</h4><ul><li><a href="/about">About Tracks</a></li><li><a href="/about#privacidad">Privacy Policy</a></li></ul></div>
         </div>

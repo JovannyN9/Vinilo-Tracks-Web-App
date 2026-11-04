@@ -37,9 +37,9 @@
         <a class="id-cta-in" href="/identificar">
           <div class="id-cta-txt">
             <span class="eyebrow">Herramienta para coleccionistas</span>
-            <h2 id="id-cta-t">¿Encontraste un vinilo? Identifícalo.</h2>
-            <p>Escanea el código de barras o escribe el número de catálogo. Te decimos qué edición es, si es rara y cuánto vale según su estado.</p>
-            <span class="btn-primary">Identificar un vinilo →</span>
+            <h2 id="id-cta-t">¿Encontraste un disco? Identifícalo.</h2>
+            <p>Vinilos, CDs, casetes y más. Escanea el código de barras o escribe el número de catálogo: te decimos qué edición es, si es rara y cuánto vale según su estado.</p>
+            <span class="btn-primary">Identificar un disco →</span>
           </div>
           <div class="id-cta-art" aria-hidden="true">
             <div class="cta-disc"></div>

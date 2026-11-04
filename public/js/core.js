@@ -158,7 +158,7 @@
       const on = VT.wishlist.tiene(id);
       b.setAttribute("aria-pressed", on);
       const label = b.querySelector(".save-label");
-      if (label) label.textContent = on ? "En tu wishlist" : "Guardar en wishlist";
+      if (label) label.textContent = on ? (b.dataset.on || "En tu wishlist") : (b.dataset.off || "Guardar en wishlist");
       b.setAttribute("aria-label", on ? "Quitar de tu wishlist" : "Guardar en tu wishlist");
     });
   }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Identifica tu vinilo · Vinilo Tracks</title>
-<meta name="description" content="Escribe o escanea el código de tu vinilo y descubre qué edición es, si es rara y cuánto vale.">
+<title>Identifica tu disco · Vinilo Tracks</title>
+<meta name="description" content="Escanea el código de tu vinilo, CD o casete y descubre qué edición es, si es rara y cuánto vale. Scan your record, CD or cassette and find out which edition it is.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23060706' stroke='%23b6ff3b' stroke-width='8'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23b6ff3b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,41 +17,48 @@
   <section class="id-hero">
     <div class="wrap id-hero-in">
       <div class="id-copy">
-        <span class="eyebrow">Herramienta para coleccionistas</span>
-        <h1>¿Qué vinilo tienes en la mano?</h1>
-        <p>Escribe o escanea el código del disco. Te decimos qué edición es, si es primera edición o reedición, qué tan raro es y cuánto vale según su estado.</p>
+        <div class="id-top">
+          <span class="eyebrow" data-i18n="eyebrow">Herramienta para coleccionistas</span>
+          <div class="lang-switch" role="group" aria-label="Idioma / Language">
+            <button type="button" data-lang="es" aria-pressed="true">ES</button>
+            <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+        <h1 data-i18n="titulo">¿Qué disco tienes en la mano?</h1>
+        <p data-i18n="intro">Escribe o escanea el código y te decimos qué edición es, si es primera edición o reedición, qué tan raro es y cuánto vale según su estado.</p>
+        <p class="id-formatos" id="id-formatos"></p>
       </div>
 
       <form class="id-box" id="id-form" role="search">
         <div class="id-types" role="radiogroup" aria-label="Tipo de código">
-          <button type="button" role="radio" data-tipo="auto" aria-checked="true">No sé / Auto</button>
-          <button type="button" role="radio" data-tipo="barcode" aria-checked="false">Código de barras</button>
-          <button type="button" role="radio" data-tipo="catno" aria-checked="false">Catálogo</button>
-          <button type="button" role="radio" data-tipo="matriz" aria-checked="false">Matriz</button>
+          <button type="button" role="radio" data-tipo="auto" aria-checked="true" data-i18n="tipoAuto">No sé / Auto</button>
+          <button type="button" role="radio" data-tipo="barcode" aria-checked="false" data-i18n="tipoBarcode">Código de barras</button>
+          <button type="button" role="radio" data-tipo="catno" aria-checked="false" data-i18n="tipoCatno">Catálogo</button>
+          <button type="button" role="radio" data-tipo="matriz" aria-checked="false" data-i18n="tipoMatriz">Matriz</button>
         </div>
         <div class="id-field">
-          <input id="id-codigo" type="search" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Código del vinilo" placeholder="Código de barras o catálogo">
+          <input id="id-codigo" type="search" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Código del disco / Record code" placeholder="Código de barras o catálogo">
           <button class="id-scan" type="button" id="id-scan" aria-label="Escanear código de barras con la cámara">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <span>Escanear</span>
+            <span data-i18n="escanear">Escanear</span>
           </button>
-          <button class="btn-primary id-go" type="submit">Identificar</button>
+          <button class="btn-primary id-go" type="submit" data-i18n="identificar">Identificar</button>
         </div>
-        <p class="id-hint mono" id="id-hint">Tip: el código de barras es el más exacto. Si no tiene, usa el número de catálogo.</p>
+        <p class="id-hint mono" id="id-hint" data-i18n="tip">Tip: el código de barras es el más exacto. Si no tiene, usa el número de catálogo.</p>
       </form>
 
       <div class="where" aria-label="Dónde encontrar cada código">
         <div class="where-card">
           <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="8" y="6" width="104" height="78" rx="3" class="w-sleeve"/><g class="w-hi"><rect x="70" y="54" width="34" height="20" rx="2" fill="none"/><path d="M74 58v12M77 58v12M79 58v12M82 58v12M86 58v12M88 58v12M91 58v12M95 58v12M98 58v12M100 58v12"/></g></svg>
-          <div><strong>Código de barras</strong><span>Contraportada o sticker del plástico. Discos de los 80 en adelante.</span></div>
+          <div><strong data-i18n="dondeBarcodeT">Código de barras</strong><span data-i18n="dondeBarcode">Contraportada o sticker del plástico. Discos y CDs de los 80 en adelante.</span></div>
         </div>
         <div class="where-card">
           <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="8" y="6" width="104" height="78" rx="3" class="w-sleeve"/><rect x="104" y="6" width="8" height="78" class="w-hi-fill"/><circle cx="58" cy="45" r="26" class="w-disc"/><circle cx="58" cy="45" r="9" class="w-label"/><text x="49" y="47" class="w-txt">LP-01</text></svg>
-          <div><strong>Número de catálogo</strong><span>En el lomo, la contraportada y la etiqueta. Ej. <em>LPR-16043</em>.</span></div>
+          <div><strong data-i18n="dondeCatnoT">Número de catálogo</strong><span><span data-i18n="dondeCatno">En el lomo, la contraportada y la etiqueta. Ej.</span> <em>LPR-16043</em>.</span></div>
         </div>
         <div class="where-card">
           <svg viewBox="0 0 120 90" aria-hidden="true"><circle cx="60" cy="45" r="40" class="w-disc"/><circle cx="60" cy="45" r="27" class="w-gap"/><circle cx="60" cy="45" r="14" class="w-label"/><path d="M38 32a26 26 0 0 1 10-8" class="w-etch"/><text x="70" y="22" class="w-txt w-etch-t">A1-XYZ</text></svg>
-          <div><strong>Matriz</strong><span>Grabada en la parte lisa del vinilo, junto a la etiqueta. Es lo que separa una primera edición de una reedición.</span></div>
+          <div><strong data-i18n="dondeMatrizT">Matriz</strong><span data-i18n="dondeMatriz">Grabada en la parte lisa del vinilo junto a la etiqueta, o en el anillo transparente del CD. Separa una primera edición de una reedición.</span></div>
         </div>
       </div>
     </div>
@@ -64,8 +71,8 @@
       <video id="scan-video" playsinline muted></video>
       <div class="scan-frame" aria-hidden="true"><span></span></div>
     </div>
-    <p class="scan-msg" id="scan-msg">Apunta al código de barras de la contraportada.</p>
-    <button class="pill" type="button" id="scan-close">Cancelar</button>
+    <p class="scan-msg" id="scan-msg" data-i18n="scanMsg">Apunta al código de barras de la contraportada.</p>
+    <button class="pill" type="button" id="scan-close" data-i18n="scanCancelar">Cancelar</button>
   </div>
 
   <div class="wrap id-out" id="id-out" aria-live="polite"></div>

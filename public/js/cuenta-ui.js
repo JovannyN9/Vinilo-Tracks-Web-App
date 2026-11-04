@@ -20,7 +20,7 @@
          <div class="acct-menu" id="acct-menu" role="menu" hidden>
            <div class="acct-who"><strong>${esc(u.nombre)}</strong><span>${esc(u.email)}</span></div>
            <a role="menuitem" href="/wishlist">Mi wishlist</a>
-           <a role="menuitem" href="/identificar">Identificar un vinilo</a>
+           <a role="menuitem" href="/identificar">Identificar un disco</a>
            <button role="menuitem" type="button" id="acct-salir">Cerrar sesión</button>
          </div>`
       : `<button class="btn-login" type="button" data-auth="entrar" aria-label="Entrar a tu cuenta">
@@ -70,6 +70,10 @@
         <button class="btn-primary auth-submit" type="submit" id="auth-submit">Entrar</button>
         <button type="button" class="link-btn auth-forgot" id="auth-forgot">¿Olvidaste tu contraseña?</button>
       </form>
+      <div class="auth-why" id="auth-why">
+        <strong>¿Para qué es la cuenta?</strong>
+        <p>Solo para guardar tu wishlist en la nube. Así te sigue al celular y a la compu, y no se pierde si borras el caché o cambias de navegador. Todo lo demás de Vinilo Tracks lo puedes usar sin cuenta. No te mandamos spam.</p>
+      </div>
     </div>`);
 
   const $ = id => document.getElementById(id);
@@ -78,8 +82,8 @@
   let ultimoFoco = null;
 
   const TEXTOS = {
-    entrar: ["Entra a Vinilo Tracks", "Guarda tu wishlist en la nube y úsala en el celular y en la compu.", "Entrar"],
-    registro: ["Crea tu cuenta", "Es gratis. Tu wishlist te sigue a todos tus dispositivos.", "Crear cuenta"],
+    entrar: ["Entra a Vinilo Tracks", "Tu wishlist, en todos tus dispositivos.", "Entrar"],
+    registro: ["Crea tu cuenta", "Gratis. Tu wishlist te sigue a todos lados y no se pierde al borrar el caché.", "Crear cuenta"],
     recuperar: ["Recupera tu cuenta", "Te mandamos un correo con un enlace para crear una contraseña nueva.", "Mandar correo"]
   };
 
@@ -92,6 +96,7 @@
     $("fld-nombre").hidden = m !== "registro";
     $("fld-pass").hidden = m === "recuperar";
     $("auth-forgot").hidden = m !== "entrar";
+    $("auth-why").hidden = m === "recuperar";
     $("auth-google").hidden = m === "recuperar" || !VT.cuenta.google;
     auth.querySelector(".auth-or").hidden = m === "recuperar" || !VT.cuenta.google;
     auth.querySelector(".auth-tabs").hidden = m === "recuperar";
