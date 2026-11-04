@@ -867,7 +867,11 @@ code { overflow-wrap: anywhere; }
 }
 
 /* ---------- identificador v2: idioma, formatos, verificación compacta ---------- */
-.id-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.id-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: relative; z-index: 5; }
+/* el switch siempre por encima: el título gigante (Anton) sobresale de su caja y lo tapaba en compu */
+.lang-switch { position: relative; z-index: 6; }
+.lang-switch button { position: relative; z-index: 1; }
+.id-copy h1 { position: relative; z-index: 1; }
 .lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 99px; padding: 3px; background: var(--panel); }
 .lang-switch button { border: 0; background: none; color: var(--mute); font-family: var(--f-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; padding: 6px 12px; border-radius: 99px; cursor: pointer; }
 .lang-switch button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
