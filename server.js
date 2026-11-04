@@ -333,7 +333,24 @@ app.use("/api/identificar", require("./rutas/identificar")({ discogs, discogsGet
 app.use("/api", require("./rutas/cuenta")());
 
 /* ---------- páginas con URL limpia ---------- */
-const pagina = archivo => (req, res) => res.sendFile(path.join(__dirname, "public", archivo));
+/* SELLO DE VERSIÓN: a cada /js/... y /css/... de las páginas le agregamos ?v=<versión>.
+   En cada deploy la versión cambia (Render da el commit en RENDER_GIT_COMMIT), así el
+   navegador de cada visitante baja el código nuevo en vez de usar el que tenía guardado. */
+const VERSION = (process.env.RENDER_GIT_COMMIT || Date.now().toString(36)).slice(0, 8);
+const EN_PRODUCCION = !!process.env.RENDER || process.env.NODE_ENV === "production";
+const paginasListas = new Map();
+function enviarPagina(res, archivo, status = 200) {
+  let html = paginasListas.get(archivo);
+  if (!html) {
+    html = fs.readFileSync(path.join(__dirname, "public", archivo), "utf8")
+      .replace(/((?:src|href)="\/(?:js|css)\/[^"?]+\.(?:js|css))"/g, `$1?v=${VERSION}"`);
+    if (EN_PRODUCCION) paginasListas.set(archivo, html); // en tu compu se relee siempre, para ver tus cambios
+  }
+  res.set("Cache-Control", "no-cache");
+  res.status(status).type("html").send(html);
+}
+const pagina = archivo => (req, res) => enviarPagina(res, archivo);
+app.get(["/", "/index.html"], pagina("index.html"));
 app.get("/resenas", pagina("resenas.html"));
 app.get("/resenas/:slug", pagina("resena.html"));
 app.get("/noticias", pagina("noticias.html"));
@@ -345,6 +362,6 @@ app.get("/about", pagina("about.html"));
 app.get("/auth/callback", pagina("auth-callback.html"));
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use((req, res) => res.status(404).sendFile(path.join(__dirname, "public", "404.html")));
+app.use((req, res) => enviarPagina(res, "404.html", 404));
 
-app.listen(PORT, () => console.log(`🟢 Vinilo Tracks corriendo en http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🟢 Vinilo Tracks corriendo en http://localhost:${PORT} · versión ${VERSION}`));
