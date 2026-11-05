@@ -108,7 +108,7 @@
   function abrirAuth(m = "entrar") {
     if (!VT.cuenta.login) return VT.toast("El login todavía no está activado en este sitio.");
     ultimoFoco = document.activeElement;
-    document.body.classList.remove("wl-open"); // si el panel de wishlist estaba abierto
+    VT.cerrarWishlist ? VT.cerrarWishlist() : document.body.classList.remove("wl-open"); // si el panel de wishlist estaba abierto
     ponerModo(m);
     authBg.hidden = auth.hidden = false;
     requestAnimationFrame(() => document.body.classList.add("auth-open"));
@@ -129,7 +129,18 @@
   });
   $("auth-close").addEventListener("click", cerrarAuth);
   authBg.addEventListener("click", cerrarAuth);
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !auth.hidden) cerrarAuth(); });
+  document.addEventListener("keydown", e => {
+    if (auth.hidden) return;
+    if (e.key === "Escape") return cerrarAuth();
+    /* con Tab el foco se queda dentro de la ventana (accesibilidad) */
+    if (e.key === "Tab") {
+      const f = [...auth.querySelectorAll("a[href], button, input, select, textarea")].filter(el => !el.disabled && el.offsetParent !== null);
+      if (!f.length) return;
+      const [primero, ultimo] = [f[0], f[f.length - 1]];
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+    }
+  });
   auth.querySelectorAll("[data-modo]").forEach(b => b.addEventListener("click", () => ponerModo(b.dataset.modo)));
   $("auth-forgot").addEventListener("click", () => ponerModo("recuperar"));
   $("auth-eye").addEventListener("click", e => {

@@ -17,7 +17,7 @@
 
   json(`/api/release/${id}`).then(async d => {
     const artista = d.artistas.join(", ");
-    document.title = `${artista} — ${d.titulo} · Vinilo Tracks`;
+    if (/^Ficha del vinilo/.test(document.title)) document.title = `${artista} — ${d.titulo} · Vinilo Tracks`; // si el servidor no alcanzó a ponerlo
     const portada = d.imagenes[0]?.url || "";
     const a = arteVacio(artista);
     const guardar = { id: d.id, titulo: d.titulo, artista, anio: d.anio, pais: d.pais, portada };

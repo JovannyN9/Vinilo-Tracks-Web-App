@@ -225,9 +225,11 @@
   const LKEY = "vt-lang-identificador";
   const idiomaInicial = () => {
     try { const g = localStorage.getItem(LKEY); if (g === "es" || g === "en") return g; } catch {}
+    if (/bot|crawl|spider|slurp|lighthouse|google|bing/i.test(navigator.userAgent)) return "es"; // Google siempre ve la versión en español
     return /^es\b/i.test(navigator.language || "es") ? "es" : "en";
   };
   let lang = idiomaInicial();
+  const TITULO_ES = document.title; // el título que puso el servidor (pensado para Google)
   const L = () => T[lang];
   const locale = () => (lang === "es" ? "es-MX" : "en-US");
   function num(n) { return n == null ? "—" : Number(n).toLocaleString(locale()); }
@@ -239,7 +241,7 @@
   /* textos fijos del HTML (data-i18n="clave") */
   function traducirPagina() {
     document.documentElement.lang = lang;
-    document.title = L().docTitulo;
+    document.title = lang === "es" ? TITULO_ES : L().docTitulo;
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const v = L()[el.dataset.i18n];
       if (typeof v === "string") el.textContent = v;

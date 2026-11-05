@@ -68,7 +68,9 @@
   const drawer = document.getElementById("wl-drawer");
   const backdrop = document.getElementById("wl-backdrop");
   const openBtn = document.getElementById("wl-open");
+  drawer.inert = true; // cerrado: ni el teclado ni el lector de pantalla entran ahí
   function abrir() {
+    drawer.inert = false;
     backdrop.hidden = false;
     requestAnimationFrame(() => document.body.classList.add("wl-open"));
     drawer.setAttribute("aria-hidden", "false");
@@ -76,11 +78,16 @@
     drawer.focus();
   }
   function cerrar() {
+    if (drawer.inert) return;
+    const estabaAdentro = drawer.contains(document.activeElement);
+    drawer.inert = true;
+    if (estabaAdentro) openBtn?.focus(); // regresamos el foco al botón que lo abrió
     document.body.classList.remove("wl-open");
     drawer.setAttribute("aria-hidden", "true");
     openBtn.setAttribute("aria-expanded", "false");
     setTimeout(() => (backdrop.hidden = true), 300);
   }
+  VT.cerrarWishlist = cerrar;
   openBtn?.addEventListener("click", abrir);
   document.getElementById("wl-close").addEventListener("click", cerrar);
   backdrop.addEventListener("click", cerrar);
@@ -115,10 +122,10 @@
       <div class="wrap">
         <p class="big" aria-hidden="true" translate="no">Vinilo Tracks</p>
         <div class="fcols">
-          <div><h4>About Tracks</h4><p class="fabout">Revista digital de vinilo y música en español, curada desde Los Angeles para coleccionistas y escuchas pacientes.</p></div>
-          <div><h4>Secciones</h4><ul><li><a href="/resenas">Reseñas</a></li><li><a href="/noticias">Blog &amp; Noticias</a></li><li><a href="/#buscador">Buscador</a></li><li><a href="/identificar">Identificador de discos</a></li><li><a href="/wishlist">Wishlist</a></li></ul></div>
-          <div><h4>Escenas</h4><ul><li><a href="/resenas#Rock">Rock en español</a></li><li><a href="/resenas#Pop">Pop</a></li><li><a href="/resenas#Alternativo">Alternativo</a></li></ul></div>
-          <div><h4>Sitio</h4><ul><li><a href="/about">About Tracks</a></li><li><a href="/about#privacidad">Privacy Policy</a></li></ul></div>
+          <div><h2 class="ftit">About Tracks</h2><p class="fabout">Revista digital de vinilo y música en español, curada desde Los Angeles para coleccionistas y escuchas pacientes.</p></div>
+          <div><h2 class="ftit">Secciones</h2><ul><li><a href="/resenas">Reseñas</a></li><li><a href="/noticias">Blog &amp; Noticias</a></li><li><a href="/#buscador">Buscador</a></li><li><a href="/identificar">Identificador de discos</a></li><li><a href="/wishlist">Wishlist</a></li></ul></div>
+          <div><h2 class="ftit">Escenas</h2><ul><li><a href="/resenas#Rock">Rock en español</a></li><li><a href="/resenas#Pop">Pop</a></li><li><a href="/resenas#Alternativo">Alternativo</a></li></ul></div>
+          <div><h2 class="ftit">Sitio</h2><ul><li><a href="/about">About Tracks</a></li><li><a href="/about#privacidad">Privacy Policy</a></li></ul></div>
         </div>
         <div class="legal mono"><span>© ${new Date().getFullYear()} Vinilo Tracks · vinilotracks.com</span><span>Datos de discos vía Discogs</span></div>
       </div>

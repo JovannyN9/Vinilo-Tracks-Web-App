@@ -183,26 +183,36 @@
   const icoSave = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>`;
   VT.icoSave = icoSave;
 
+  /* imagen con versiones ligeras (las arma scripts/imagenes.py; el servidor manda la lista en window.VT_IMG) */
+  VT.img = (src, alt = "", o = {}) => {
+    const m = (window.VT_IMG || {})[src];
+    const base = String(src).replace(/^\/img\//, "").replace(/\.[a-z]+$/i, "");
+    const ss = m && m.v && m.v.length ? ` srcset="${m.v.map(w => `/img/r/${base}-${w}.webp ${w}w`).join(", ")}, ${src} ${m.w}w" sizes="${o.sizes || "100vw"}"` : "";
+    const wh = m ? ` width="${m.w}" height="${m.h}"` : "";
+    return `<img src="${VT.esc(src)}"${ss}${wh} alt="${VT.esc(alt)}"${o.prioridad ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+  };
+  const SIZES_TARJETA = "(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 30vw";
+
   VT.tarjetaResena = r => `
     <article class="card">
       <a class="card-link" href="/resenas/${r.slug}">
-        <div class="cover"><img src="${r.portada}" alt="Portada de ${VT.esc(r.titulo)}" loading="lazy"><span class="score">${r.calificacion.toFixed(1)}</span></div>
+        <div class="cover">${VT.img(r.portada, `Portada del disco ${r.titulo} de ${r.artista}`, { sizes: SIZES_TARJETA })}<span class="score"><span class="sr-only">Calificación: </span>${r.calificacion.toFixed(1)}<span class="sr-only"> de 10</span></span></div>
         <span class="meta">${r.anio} · ${VT.esc(r.pais)} · ${VT.esc(r.estilo)}</span>
         <h3>${VT.esc(r.artista)} — ${VT.esc(r.titulo)}</h3>
         <p>${VT.esc(r.extracto)}</p>
-        <span class="read">Leer reseña →</span>
+        <span class="read" aria-hidden="true">Leer reseña →</span>
       </a>
     </article>`;
 
   VT.tarjetaNoticia = (n, grande = false) => `
     <article class="post${grande ? " post-big" : ""}">
       <a class="card-link" href="/noticias/${n.slug}">
-        <div class="post-img"><img src="${n.imagen}" alt="" loading="lazy"></div>
+        <div class="post-img">${VT.img(n.imagen, "", { sizes: grande ? "(max-width: 700px) 92vw, 60vw" : SIZES_TARJETA })}</div>
         <div class="post-txt">
-          <span class="meta">${VT.esc(n.categoria)} · ${VT.fecha(n.fecha)}</span>
+          <span class="meta">${VT.esc(n.categoria)} · <time datetime="${VT.esc(n.fecha)}">${VT.fecha(n.fecha)}</time></span>
           <h3>${VT.esc(n.titulo)}</h3>
           <p>${VT.esc(n.extracto)}</p>
-          <span class="read">Leer nota →</span>
+          <span class="read" aria-hidden="true">Leer nota →</span>
         </div>
       </a>
     </article>`;

@@ -9,15 +9,16 @@
       main.innerHTML = `<div class="wrap notfound"><h1>Reseña no encontrada</h1><p>Puede que la hayamos movido.</p><a class="pill" href="/resenas">Ver todas las reseñas</a></div>`;
       return;
     }
-    document.title = `${r.artista} — ${r.titulo} · Vinilo Tracks`;
-    const palabras = r.cuerpo.map(b => b.p || b.h2 || (b.lista || []).join(" ")).join(" ").split(/\s+/).length;
+    /* si el servidor ya mandó la reseña escrita (lo normal), no la volvemos a dibujar */
+    if (!main.querySelector("[data-ssr]")) {
+    const palabras = r.cuerpo.map(b => b.p || b.h2 || b.cita || (b.lista || []).join(" ") || (b.items || []).map(i => `${i.t} ${i.d}`).join(" ")).join(" ").split(/\s+/).filter(Boolean).length;
     const minutos = Math.max(1, Math.round(palabras / 200));
 
     main.innerHTML = `
     <article class="review">
       <div class="wrap review-hero">
         <div class="review-cover">
-          <img src="${r.portada}" alt="Portada de ${esc(r.titulo)}">
+          ${VT.img(r.portada, `Portada del disco ${r.titulo} de ${r.artista}`, { sizes: "(max-width: 900px) 92vw, 42vw", prioridad: true })}
         </div>
         <div class="review-head">
           <a class="crumb mono" href="/resenas">← Reseñas</a>
@@ -44,6 +45,7 @@
       <div class="head head-sm"><h2>Más reseñas</h2><a class="pill" href="/resenas">Ver todas</a></div>
       <div class="grid">${lista.filter(x => x.slug !== r.slug).slice(0, 3).map(tarjetaResena).join("")}</div>
     </section>`;
+    }
 
     /* busca el vinilo en Discogs para mostrar tracklist y botón de guardar */
     const acciones = document.getElementById("acciones");

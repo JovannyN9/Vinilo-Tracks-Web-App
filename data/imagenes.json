@@ -1,0 +1,139 @@
+{
+ "/img/capsula-0.jpg": {
+  "w": 559,
+  "h": 1244,
+  "v": [
+   480
+  ]
+ },
+ "/img/capsula-1.jpg": {
+  "w": 259,
+  "h": 576,
+  "v": []
+ },
+ "/img/capsula-2.jpg": {
+  "w": 576,
+  "h": 1282,
+  "v": [
+   480
+  ]
+ },
+ "/img/capsula-3.jpg": {
+  "w": 231,
+  "h": 515,
+  "v": []
+ },
+ "/img/capsula-4.jpg": {
+  "w": 405,
+  "h": 900,
+  "v": []
+ },
+ "/img/cover-artaud.jpg": {
+  "w": 895,
+  "h": 795,
+  "v": [
+   480
+  ]
+ },
+ "/img/cover-austin.jpg": {
+  "w": 600,
+  "h": 596,
+  "v": [
+   480
+  ]
+ },
+ "/img/cover-enjambre.jpg": {
+  "w": 600,
+  "h": 600,
+  "v": [
+   480
+  ]
+ },
+ "/img/cover-odisseo.jpg": {
+  "w": 1282,
+  "h": 1282,
+  "v": [
+   480,
+   960
+  ]
+ },
+ "/img/cover-porter.jpg": {
+  "w": 599,
+  "h": 597,
+  "v": [
+   480
+  ]
+ },
+ "/img/cover-sgtp.jpg": {
+  "w": 600,
+  "h": 600,
+  "v": [
+   480
+  ]
+ },
+ "/img/foto-banda-luz.jpg": {
+  "w": 2048,
+  "h": 1244,
+  "v": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "/img/foto-duo.jpg": {
+  "w": 900,
+  "h": 900,
+  "v": [
+   480
+  ]
+ },
+ "/img/foto-odisseo-2024.jpg": {
+  "w": 1920,
+  "h": 1282,
+  "v": [
+   480,
+   960,
+   1600
+  ]
+ },
+ "/img/foto-odisseo.jpg": {
+  "w": 739,
+  "h": 415,
+  "v": [
+   480
+  ]
+ },
+ "/img/foto-pescado.jpg": {
+  "w": 720,
+  "h": 515,
+  "v": [
+   480
+  ]
+ },
+ "/img/foto-terracota.jpg": {
+  "w": 1024,
+  "h": 576,
+  "v": [
+   480
+  ]
+ },
+ "/img/nota-coleccion.jpg": {
+  "w": 399,
+  "h": 501,
+  "v": []
+ },
+ "/img/nota-discogs.jpg": {
+  "w": 447,
+  "h": 447,
+  "v": []
+ },
+ "/img/singer.png": {
+  "w": 2500,
+  "h": 2226,
+  "v": [
+   480,
+   960,
+   1600
+  ]
+ }
+}

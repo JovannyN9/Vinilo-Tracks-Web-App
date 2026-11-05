@@ -9,12 +9,12 @@
       main.innerHTML = `<div class="wrap notfound"><h1>Nota no encontrada</h1><a class="pill" href="/noticias">Ver todas las noticias</a></div>`;
       return;
     }
-    document.title = `${n.titulo} · Vinilo Tracks`;
+    if (main.querySelector("[data-ssr]")) return; // el servidor ya la mandó escrita
     main.innerHTML = `
     <article class="article">
       <div class="hero-bleed">
         <div class="article-hero">
-          <img src="${n.imagen}" alt="">
+          ${VT.img(n.imagen, "", { sizes: "100vw", prioridad: true })}
           <div class="article-hero-txt">
             <a class="crumb mono" href="/noticias">← Blog &amp; Noticias</a>
             <span class="eyebrow">${esc(n.categoria)}</span>

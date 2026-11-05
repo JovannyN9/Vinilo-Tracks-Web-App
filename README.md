@@ -174,3 +174,32 @@ Cómo funciona por dentro:
 Como tiene servidor Node, necesitas un hosting que corra Node.js: Render o Railway (tienen opción gratis o barata), o Hostinger Business / Cloud. El plan compartido de Hostinger (Single, Premium) no corre Node.
 
 En el hosting agrega como variables de entorno `DISCOGS_TOKEN`, `SUPABASE_URL`, `SUPABASE_ANON_KEY` y `ANIO_MINIMO`. Nunca subas el archivo `.env`. Y en Supabase agrega tu dominio real en Site URL y Redirect URLs.
+
+## SEO y accesibilidad (rutas/seo.js)
+
+Todo es automático: cada vez que agregas una reseña o nota al JSON, el sitio solo le arma
+título, descripción, imagen para compartir, datos estructurados y la mete al sitemap y al feed.
+
+- `/sitemap.xml`: todas las páginas, con fecha e imágenes. Súbelo una vez a Google Search Console.
+- `/robots.txt`: le dice a Google qué revisar (no revisa `/api`, `/auth` ni `/wishlist`).
+- `/feed.xml`: RSS con las reseñas y notas más recientes.
+- Reseñas y notas llegan **ya escritas en el HTML** (Google las lee sin esperar el JavaScript).
+- Redirecciones 301: `www.` → sin www, `/pagina.html` → `/pagina`, `/pagina/` → `/pagina`.
+- Accesibilidad: "Saltar al contenido", textos alternativos, calificación leída en voz alta,
+  foco atrapado en la ventana de login, menú y wishlist que no se cuelan al tabular,
+  y sin animaciones para quien las tiene desactivadas en su sistema.
+
+Campos opcionales en las reseñas y notas:
+- `"actualizado": "2026-12-01"` → si editas una reseña vieja, Google sabe que hay cambios.
+
+### Imágenes ligeras
+
+Las imágenes originales nunca se tocan. `scripts/imagenes.py` crea copias .webp más chicas
+en `public/img/r/` y cada pantalla baja solo el tamaño que necesita. Córrelo cuando agregues imágenes:
+
+```
+pip install pillow          # solo la primera vez
+python3 scripts/imagenes.py
+```
+
+Si se te olvida, no pasa nada: la imagen se ve igual, nomás sin la versión ligera.

@@ -23,6 +23,8 @@ const fs = require("fs");
 const app = express();
 app.set("trust proxy", 1);       // necesario detrás de Render / Hostinger para saber si es https
 app.use(express.json({ limit: "200kb" }));
+app.disable("x-powered-by");
+app.use((req, res, next) => seo.antes(req, res, next)); // redirecciones 301 y encabezados (rutas/seo.js)
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.DISCOGS_TOKEN;
 const AÑO_MIN = Number(process.env.ANIO_MINIMO || 0);
@@ -332,25 +334,36 @@ app.get("/api/match", async (req, res) => {
 app.use("/api/identificar", require("./rutas/identificar")({ discogs, discogsGet, obtenerFicha, desdeCache, cache, sinNumero, tokenListo: () => !!TOKEN }));
 app.use("/api", require("./rutas/cuenta")());
 
+/* ---------- SEO: redirecciones, robots, sitemap, feed (rutas/seo.js) ---------- */
+const seo = require("./rutas/seo")({ raiz: __dirname, obtenerFicha, tokenListo: () => !!TOKEN });
+seo.rutas(app);
+
 /* ---------- páginas con URL limpia ---------- */
 /* SELLO DE VERSIÓN: a cada /js/... y /css/... de las páginas le agregamos ?v=<versión>.
-   En cada deploy la versión cambia (Render da el commit en RENDER_GIT_COMMIT), así el
-   navegador de cada visitante baja el código nuevo en vez de usar el que tenía guardado. */
-const VERSION = (process.env.RENDER_GIT_COMMIT || Date.now().toString(36)).slice(0, 8);
+   En cada deploy la versión cambia, así el navegador de cada visitante baja el código
+   nuevo en vez de usar el que tenía guardado. */
+const VERSION = (process.env.RENDER_GIT_COMMIT || process.env.GIT_COMMIT || Date.now().toString(36)).slice(0, 8);
 const EN_PRODUCCION = !!process.env.RENDER || process.env.NODE_ENV === "production";
+const esLocal = req => /^(localhost|127\.|\[?::1)/.test(req?.hostname || "");
 const paginasListas = new Map();
-function enviarPagina(res, archivo, status = 200) {
-  let html = paginasListas.get(archivo);
-  if (!html) {
-    html = fs.readFileSync(path.join(__dirname, "public", archivo), "utf8")
-      .replace(/((?:src|href)="\/(?:js|css)\/[^"?]+\.(?:js|css))"/g, `$1?v=${VERSION}"`);
-    if (EN_PRODUCCION) paginasListas.set(archivo, html); // en tu compu se relee siempre, para ver tus cambios
+async function enviarPagina(req, res, archivo, status = 200) {
+  try {
+    let html = paginasListas.get(archivo);
+    if (!html) {
+      html = fs.readFileSync(path.join(__dirname, "public", archivo), "utf8")
+        .replace(/((?:src|href)="\/(?:js|css)\/[^"?]+\.(?:js|css))"/g, `$1?v=${VERSION}"`);
+      if (EN_PRODUCCION) paginasListas.set(archivo, html); // en tu compu se relee siempre, para ver tus cambios
+    }
+    const listo = await seo.preparar(req, archivo, html, status);
+    res.set("Cache-Control", "no-cache");
+    res.status(listo.status).type("html").send(listo.html);
+  } catch (err) {
+    console.error("Error armando la página:", err);
+    res.status(500).type("text").send("Algo falló. Intenta de nuevo en un momento.");
   }
-  res.set("Cache-Control", "no-cache");
-  res.status(status).type("html").send(html);
 }
-const pagina = archivo => (req, res) => enviarPagina(res, archivo);
-app.get(["/", "/index.html"], pagina("index.html"));
+const pagina = archivo => (req, res) => enviarPagina(req, res, archivo);
+app.get("/", pagina("index.html"));
 app.get("/resenas", pagina("resenas.html"));
 app.get("/resenas/:slug", pagina("resena.html"));
 app.get("/noticias", pagina("noticias.html"));
@@ -361,7 +374,10 @@ app.get("/identificar", pagina("identificar.html"));
 app.get("/about", pagina("about.html"));
 app.get("/auth/callback", pagina("auth-callback.html"));
 
-app.use(express.static(path.join(__dirname, "public")));
-app.use((req, res) => enviarPagina(res, "404.html", 404));
+app.use(express.static(path.join(__dirname, "public"), {
+  index: false,
+  setHeaders: (res, archivo) => esLocal(res.req) ? res.set("Cache-Control", "no-cache") : seo.cabecerasEstaticas(res, archivo)
+}));
+app.use((req, res) => enviarPagina(req, res, "404.html", 404));
 
 app.listen(PORT, () => console.log(`🟢 Vinilo Tracks corriendo en http://localhost:${PORT} · versión ${VERSION}`));
