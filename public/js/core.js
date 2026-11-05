@@ -234,6 +234,7 @@
   VT.cuerpo = bloques => bloques.map(b =>
     b.h2 ? `<h2>${VT.esc(b.h2)}</h2>` :
     b.lista ? `<ol>${b.lista.map(i => `<li>${VT.esc(i)}</li>`).join("")}</ol>` :
+    b.items ? `<ol class="picks">${b.items.map(i => `<li><strong>${VT.esc(i.t)}</strong><span>${VT.esc(i.d)}</span></li>`).join("")}</ol>` :
     b.cita ? `<blockquote>${VT.esc(b.cita)}</blockquote>` :
     `<p>${VT.esc(b.p)}</p>`
   ).join("");

@@ -5,24 +5,79 @@
     "categoria": "Listas",
     "fecha": "2026-10-30",
     "autor": "Redacción Vinilo Tracks",
-    "imagen": "/img/foto-odisseo.webp",
+    "imagen": "/img/LittlleJesus10DiscosDeRock.jpeg",
     "extracto": "Una lista corta para quien quiere arrancar su colección con la escena de la última década.",
     "cuerpo": [
-      { "p": "Si estás empezando a coleccionar música en español de la última década, esta lista es un buen punto de partida. No es un ranking: son discos que funcionan completos, de principio a fin, en tornamesa." },
-      { "lista": [
-        "Zoé — Prográmaton (2011)",
-        "Vetusta Morla — Mapas (2011)",
-        "Carla Morrison — Déjenme Llorar (2012)",
-        "Babasónicos — Romantisísmico (2013)",
-        "Los Bunkers — La Velocidad de la Luz (2013)",
-        "Enjambre — Daltónico (2014)",
-        "Mon Laferte — Mon Laferte Vol. 1 (2015)",
-        "Little Jesus — Río Salvaje (2016)",
-        "El Mató a un Policía Motorizado — La Síntesis O'Konor (2017)",
-        "Zoé — Aztlán (2018)"
-      ] },
-      { "h2": "Cómo buscarlos" },
-      { "p": "Todos están en nuestro buscador curado. Escribe el nombre del artista, abre el disco y guárdalo en tu wishlist para no perderlo de vista." }
+      {
+        "p": "Si vas empezando y no sabes por dónde, aquí van diez discos que se escuchan completos, que se consiguen en vinilo y que aguantan muchas vueltas. Sin orden de importancia: van por año."
+      },
+      {
+        "lista": [
+          "Zoé — Prográmaton (2011)",
+          "Vetusta Morla — Mapas (2011)",
+          "Carla Morrison — Déjenme Llorar (2012)",
+          "Babasónicos — Romantisísmico (2013)",
+          "Los Bunkers — La Velocidad de la Luz (2013)",
+          "Enjambre — Daltónico (2014)",
+          "Mon Laferte — Vol. 1 (2015)",
+          "Little Jesus — Río Salvaje (2016)",
+          "El Mató a un Policía Motorizado — La Síntesis O'Konor (2017)",
+          "Zoé — Aztlán (2018)"
+        ]
+      },
+      {
+        "h2": "Por qué cada uno"
+      },
+      {
+        "items": [
+          {
+            "t": "Prográmaton",
+            "d": "Zoé en su punto más espacial: sintetizadores, guitarras con eco y coros para cantar en estadio."
+          },
+          {
+            "t": "Mapas",
+            "d": "El disco que convirtió a Vetusta Morla en la banda grande del indie de España. Épico sin ser pretencioso."
+          },
+          {
+            "t": "Déjenme Llorar",
+            "d": "Carla Morrison casi en susurro. Pocas canciones de desamor en español duelen tan bonito."
+          },
+          {
+            "t": "Romantisísmico",
+            "d": "Babasónicos haciendo pop elegante y medio cínico. Ironía argentina con ganchos que no se sueltan."
+          },
+          {
+            "t": "La Velocidad de la Luz",
+            "d": "Los Bunkers más pop y más cuidados en la producción, poco antes de su pausa. Un cierre de etapa a la altura."
+          },
+          {
+            "t": "Daltónico",
+            "d": "Enjambre ya con su sonido bien definido: rock con aire retro, melancolía y la voz de Navejas al frente."
+          },
+          {
+            "t": "Vol. 1",
+            "d": "El disco que puso a Mon Laferte en todos lados. Bolero, rock y cumbia en el mismo acetato."
+          },
+          {
+            "t": "Río Salvaje",
+            "d": "Little Jesus creciendo: indie pop luminoso, guitarras limpias y canciones para manejar con la ventana abierta."
+          },
+          {
+            "t": "La Síntesis O'Konor",
+            "d": "Guitarras repetitivas y letras simples que pegan hondo. La banda de culto del indie argentino en su mejor momento."
+          },
+          {
+            "t": "Aztlán",
+            "d": "Zoé regresa a sus raíces y gana el Grammy. Un disco largo, cuidado y muy de vinilo."
+          }
+        ]
+      },
+      {
+        "h2": "Antes de comprar"
+      },
+      {
+        "p": "Revisa la edición en el buscador de Vinilo Tracks o en el identificador: muchos de estos discos tienen varias tiradas y no todas cuestan lo mismo. Y si alguno ya lo tienes, pásale la lista a alguien que vaya empezando."
+      }
     ]
   },
   {
@@ -31,18 +86,57 @@
     "categoria": "Guías",
     "fecha": "2026-10-24",
     "autor": "Redacción Vinilo Tracks",
-    "imagen": "/img/foto-terracota.webp",
+    "imagen": "/img/foto-terracota.jpg",
     "extracto": "Qué comprar primero, cuánto gastar y cómo no llenarte de discos que no vas a escuchar.",
     "cuerpo": [
-      { "p": "Empezar una colección emociona, pero también es fácil gastar de más. Estas son algunas reglas simples que nos han funcionado." },
-      { "h2": "1. Compra lo que escuchas" },
-      { "p": "Antes de buscar ediciones raras, compra los discos que ya pones todos los días. Una colección que se escucha vale más que una que solo se ve bonita." },
-      { "h2": "2. Usa una wishlist" },
-      { "p": "Guarda los discos que quieres y revisa la lista antes de comprar por impulso. Te ayuda a priorizar y a esperar buenos precios." },
-      { "h2": "3. Revisa la edición" },
-      { "p": "Un mismo disco puede tener muchas ediciones: reediciones, prensajes de otros países, colores especiales. Fíjate en el sello y el número de catálogo antes de pagar." },
-      { "h2": "4. Cuida lo que tienes" },
-      { "p": "Fundas internas nuevas y guardarlos de pie hacen una diferencia enorme con los años." }
+      {
+        "p": "Empezar una colección de vinilos emociona tanto que es fácil equivocarse: comprar por impulso, pagar de más por una reedición cualquiera o llenarte de discos que solo vas a escuchar una vez. Esta guía es para arrancar con la cabeza fría y con la música que de verdad te mueve."
+      },
+      {
+        "h2": "Primero, el tocadiscos"
+      },
+      {
+        "p": "No necesitas gastar una fortuna, pero sí evitar los tocadiscos de maletín más baratos: muchos tienen una aguja pesada y un brazo sin ajuste que con el tiempo desgasta los surcos. Busca uno con contrapeso ajustable en el brazo y con la opción de cambiar la cápsula. Si es usado, que te lo dejen probar."
+      },
+      {
+        "p": "El sonido también depende de lo que conectes. Si el tocadiscos no trae preamplificador integrado, vas a necesitar uno aparte o un amplificador con entrada phono. Unas bocinas decentes hacen más diferencia que casi cualquier otra mejora."
+      },
+      {
+        "h2": "Compra lo que escuchas"
+      },
+      {
+        "p": "La regla más simple es la mejor: empieza con los discos que ya escuchas completos en streaming. Si un álbum te lo sabes de principio a fin, en vinilo lo vas a disfrutar todavía más. Los discos que compras solo porque \"son clásicos\" o porque se ven bien en el estante suelen terminar sin tocar."
+      },
+      {
+        "p": "Haz una lista corta de cinco o diez discos esenciales para ti y ve por ellos poco a poco. La wishlist de Vinilo Tracks sirve justo para eso: guardas lo que quieres y no se te olvida cuando por fin lo encuentras en una tienda."
+      },
+      {
+        "h2": "Nuevo, usado o reedición"
+      },
+      {
+        "p": "Un disco nuevo y sellado te asegura que no está rayado, pero cuesta más. El usado puede ser una joya o una trampa: revisa el disco contra la luz, busca rayones que se sientan con la uña y pregunta si lo puedes escuchar. Una marca de uso ligera casi nunca se oye; un rayón profundo, siempre."
+      },
+      {
+        "p": "Las reediciones son la forma más fácil de conseguir discos que ya no se encuentran, pero no todas son iguales. Algunas salen de los masters originales y suenan increíbles; otras se hacen a partir de archivos digitales comprimidos. Antes de comprar, busca la edición en Discogs o en nuestro identificador para ver quién la hizo y qué opina la gente."
+      },
+      {
+        "h2": "Cuánto gastar"
+      },
+      {
+        "p": "Ponte un presupuesto mensual y respétalo. Es mejor comprar dos discos al mes que de verdad quieres que diez por oferta. Para saber si un precio es justo, revisa el rango de precios en Discogs: si te piden mucho más que la mediana de ventas, espérate. Siempre vuelve a salir otro."
+      },
+      {
+        "h2": "Dónde buscar"
+      },
+      {
+        "p": "Las tiendas de discos independientes, los tianguis y las ferias de vinilo son los mejores lugares para encontrar sorpresas y platicar con gente que sabe. En línea, Discogs funciona como un gran mercado de coleccionistas; las bandas independientes muchas veces venden sus propias ediciones en Bandcamp o en sus shows, y ahí el dinero les llega más directo."
+      },
+      {
+        "h2": "Cuida lo que tienes"
+      },
+      {
+        "p": "Una colección no se mide por cantidad. Guarda tus discos de pie, lejos del sol y del calor, y en fundas limpias. Diez discos bien cuidados que escuchas seguido valen más que cien empolvados. Con el tiempo tu estante va a contar tu historia: deja que crezca a tu ritmo."
+      }
     ]
   },
   {
@@ -51,16 +145,51 @@
     "categoria": "Guías",
     "fecha": "2026-10-17",
     "autor": "Redacción Vinilo Tracks",
-    "imagen": "/img/foto-banda-luz.webp",
+    "imagen": "/img/ComoLimpiaryGuardarVinyl.jpeg",
     "extracto": "Lo básico para que tus discos suenen bien por muchos años.",
     "cuerpo": [
-      { "p": "Un vinilo bien cuidado puede sonar bien durante décadas. La mayoría de los daños vienen de hábitos pequeños que se corrigen fácil." },
-      { "h2": "Agárralo por las orillas" },
-      { "p": "Los dedos dejan grasa en los surcos. Sostén el disco por el borde y por la etiqueta del centro." },
-      { "h2": "Limpieza en seco antes de cada escucha" },
-      { "p": "Un cepillo de fibra de carbono quita el polvo de la superficie. Pásalo en círculos mientras el disco gira." },
-      { "h2": "Guárdalos de pie" },
-      { "p": "Apilarlos acostados los deforma con el tiempo. Guárdalos verticales, lejos del sol y de fuentes de calor." }
+      {
+        "p": "Un vinilo bien cuidado puede sonar igual de bien dentro de cincuenta años. Uno mal guardado puede doblarse o llenarse de ruido en unos meses. La buena noticia es que cuidarlos es sencillo y barato: basta con unos hábitos y un par de herramientas."
+      },
+      {
+        "h2": "Cómo agarrar un disco"
+      },
+      {
+        "p": "Toma el vinilo siempre por la orilla y por la etiqueta del centro, nunca por los surcos. La grasa de los dedos atrapa polvo, y ese polvo es lo que se oye como chasquidos. Sácalo de la funda con cuidado, sin arrastrarlo, y regrésalo en cuanto termines de escucharlo."
+      },
+      {
+        "h2": "Limpieza de todos los días"
+      },
+      {
+        "p": "Antes de cada escucha, pásale un cepillo antiestático de fibra de carbono mientras el disco gira, de adentro hacia afuera, y levántalo al final para no dejar el polvo en el borde. Toma diez segundos y hace una diferencia enorme en el sonido."
+      },
+      {
+        "p": "La aguja también se ensucia. Límpiala de vez en cuando con un cepillito especial, siempre de atrás hacia adelante, en la misma dirección en que corre el disco. Una aguja sucia suena mal y además daña los surcos."
+      },
+      {
+        "h2": "Limpieza profunda"
+      },
+      {
+        "p": "Cuando compras un disco usado o uno tuyo ya suena con mucho ruido, toca una limpieza en húmedo. Usa un líquido especial para vinilos o agua destilada con unas gotas de alcohol isopropílico, y un paño de microfibra limpio. Limpia en círculos, siguiendo los surcos, sin mojar la etiqueta. Deja que se seque completamente de pie antes de guardarlo."
+      },
+      {
+        "p": "Evita el agua de la llave, que deja minerales, y los limpiadores de casa, que pueden dañar el vinilo. Si te vuelves coleccionista en serio, una máquina de limpieza es una buena inversión."
+      },
+      {
+        "h2": "Cómo guardarlos"
+      },
+      {
+        "p": "Siempre de pie, nunca acostados ni apilados: el peso de otros discos los deforma con el tiempo. No los aprietes demasiado en el estante, pero tampoco los dejes inclinados. Que estén lejos de la luz directa del sol, de las ventanas, de los radiadores y de las bocinas, que se calientan."
+      },
+      {
+        "p": "Cambia las fundas de papel originales por fundas internas antiestáticas, que no rayan ni sueltan fibras. Una funda exterior de plástico protege la portada del desgaste y del polvo. Ojo: no guardes el disco dentro de la funda de plástico sellada de fábrica, porque puede atrapar humedad y encoger con el calor."
+      },
+      {
+        "h2": "En resumen"
+      },
+      {
+        "p": "Agárralo por la orilla, cepíllalo antes de escucharlo, limpia la aguja, guárdalo de pie y lejos del calor. Con eso tus discos van a sonar bien por muchos años, y si algún día los vendes, van a valer más."
+      }
     ]
   },
   {
@@ -69,16 +198,57 @@
     "categoria": "Guías",
     "fecha": "2026-10-10",
     "autor": "Redacción Vinilo Tracks",
-    "imagen": "/img/foto-duo.webp",
+    "imagen": "/img/nota-discogs.jpg",
     "extracto": "Qué significa cada dato de la ficha de un disco y por qué importa al comprar.",
     "cuerpo": [
-      { "p": "Cuando abres un vinilo en nuestro buscador, la información viene de Discogs, la base de datos de música más grande del mundo. Así se lee." },
-      { "h2": "Sello y número de catálogo" },
-      { "p": "El sello es la disquera que publicó esa edición. El número de catálogo la identifica. Dos discos con la misma portada pueden tener números distintos si son ediciones diferentes." },
-      { "h2": "Formato" },
-      { "p": "Te dice si es LP, de 12 pulgadas, a 33 RPM, si es reedición, edición limitada o de color." },
-      { "h2": "Tienen y lo quieren" },
-      { "p": "Cuánta gente de la comunidad lo tiene en su colección y cuánta lo tiene en su wishlist. Si muchos lo quieren y pocos lo tienen, suele ser más difícil de conseguir." }
+      {
+        "p": "Discogs es la base de datos de música más grande que existe, hecha por coleccionistas de todo el mundo. Cada disco tiene una ficha con un montón de datos que al principio parecen chino. Aprender a leerla te ayuda a saber qué tienes en las manos, cuánto vale y si te están vendiendo lo que dicen."
+      },
+      {
+        "h2": "Master y release"
+      },
+      {
+        "p": "Lo primero es entender la diferencia. Un master agrupa todas las versiones de un mismo álbum. Cada release es una edición específica: el vinilo original de un país, la reedición de 2015, el CD japonés, el casete. Un disco famoso puede tener cientos de releases, y no valen lo mismo."
+      },
+      {
+        "p": "Cuando busques un disco que tienes, no te quedes con el primer resultado. Entra al master, revisa la lista de versiones y filtra por formato, país y año hasta encontrar la tuya."
+      },
+      {
+        "h2": "Sello y número de catálogo"
+      },
+      {
+        "p": "El sello (label) es la disquera que publicó la edición, y el número de catálogo (Cat#) es el código que esa disquera le puso. Lo encuentras impreso en el lomo, en la contraportada o en la etiqueta del disco. Es de los datos más útiles para identificar una edición, porque cambia entre países y entre tiradas."
+      },
+      {
+        "h2": "Formato, país y año"
+      },
+      {
+        "p": "El formato dice qué es exactamente: LP, 7\", 12\", EP, si es de 180 gramos, si es de color, si es edición limitada o si trae gatefold. El país es donde se fabricó y el año es el de esa edición en particular, no necesariamente el del álbum original."
+      },
+      {
+        "h2": "La matriz"
+      },
+      {
+        "p": "La parte más importante para los coleccionistas está en la sección de identificadores (Barcode and Other Identifiers). Ahí aparece la matriz o runout: los códigos grabados a mano o a máquina en el espacio liso entre el último surco y la etiqueta. Cada planta de prensado y cada corte deja una marca distinta."
+      },
+      {
+        "p": "Si dos discos se ven iguales por fuera, la matriz es la que dice cuál es el original y cuál es una reimpresión. Revísala con buena luz e inclinando el disco, y compárala letra por letra con la ficha."
+      },
+      {
+        "h2": "El código de barras"
+      },
+      {
+        "p": "Las ediciones modernas traen código de barras, y es la forma más rápida de encontrar una ficha. Es lo que usa el identificador de Vinilo Tracks: lo escaneas con la cámara y te muestra las ediciones que coinciden. Los discos anteriores a los ochenta normalmente no lo tienen, así que ahí toca usar el número de catálogo y la matriz."
+      },
+      {
+        "h2": "Precios y comunidad"
+      },
+      {
+        "p": "En cada release vas a ver cuántas personas lo tienen (Have) y cuántas lo buscan (Want). Muchos lo quieren y pocos lo tienen: probablemente es raro. También aparece el historial de ventas con el precio más bajo, la mediana y el más alto. La mediana es la referencia más honesta para saber si un precio es justo."
+      },
+      {
+        "p": "Por último, lee las notas y los comentarios. Ahí la comunidad avisa de errores de impresión, diferencias entre tiradas y ediciones piratas. Con práctica, en un par de minutos vas a poder leer cualquier ficha como un coleccionista de años."
+      }
     ]
   }
 ]

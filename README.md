@@ -92,18 +92,26 @@ Las dos listas se recargan solas al guardar, sin reiniciar el servidor.
 Abre `public/contenido/resenas.json` (o `noticias.json`), copia un bloque completo y cambia los datos. El `slug` es lo que sale en la URL (`/resenas/mi-slug`), sin acentos ni espacios. El texto va en `cuerpo` como bloques:
 
 ```json
-{ "p": "Un párrafo." }, { "h2": "Un subtítulo" }, { "lista": ["uno", "dos"] }
+{ "p": "Un párrafo." }, { "h2": "Un subtítulo" }, { "lista": ["uno", "dos"] }, { "cita": "Una frase destacada" }
+```
+
+Para una lista con explicación (como el "por qué" de los 10 discos):
+
+```json
+{ "items": [ { "t": "Nombre del disco", "d": "Por qué está en la lista." } ] }
 ```
 
 Cada reseña busca sola su vinilo en Discogs (por artista y título) para mostrar la ficha, el tracklist y el botón de guardar.
 
 ## Videos en las cápsulas
 
+Ahorita están apagados: las cápsulas muestran solo las imágenes con el zoom lento. Si algún día quieres videos, así se activan.
+
 En `public/index.html`, cada cápsula tiene `data-youtube`, `data-start` y `data-end`. Puedes pegar el link completo de YouTube o solo el ID:
 
 ```html
 <div class="cap" data-youtube="https://www.youtube.com/watch?v=AbC123xyz12" data-start="30" data-end="40">
-  <img src="/img/capsula-0.webp" alt="">
+  <img src="/img/capsula-0.jpg" alt="">
 </div>
 ```
 
